@@ -24,9 +24,9 @@ function Page2() {
         const { pokemon } = await getArrayPokemonByType(name);
 
         const changedArray = pokemon.map((item) => item.pokemon);
-        //setPaginatedPokemons((prevState) => [...prevState, ...changedArray]);
-        // setPokemons(changedArray);
-        setPaginatedPokemons(changedArray);
+        // setPaginatedPokemons((prevState) => [...prevState, ...changedArray]);
+        setPokemons(changedArray);
+        // setPaginatedPokemons(changedArray);
         setLoading(false);
       } else {
         const { results } = await getPokemons({ offset });
@@ -42,8 +42,8 @@ function Page2() {
       (filteredPage - 1) * pageSize,
       pageSize * filteredPage
     );
-    setPaginatedPokemons(getPagination);
-  }, [filteredPage, pageSize, pokemons]);
+    setPaginatedPokemons((prevState) => [...prevState, ...getPagination]);
+  }, [pageSize, pokemons, filteredPage]);
 
   const filterByType = (value) => {
     setName(value);
