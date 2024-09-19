@@ -11,22 +11,25 @@ function Page2() {
   const [loading, setLoading] = useState(false);
   const [filteredPage, setFilteredPage] = useState(1);
   const [paginatedPokemons, setPaginatedPokemons] = useState([]);
-
-  const [pageSize] = useState(20);
-
-  console.log(pokemons);
-  //console.log(loading);
-  //console.log(offset);
+  const pageSize = 20;
 
   useEffect(() => {
     const getAllPokemons = async () => {
       if (name) {
         const { pokemon } = await getArrayPokemonByType(name);
-        setPokemons([]);
+
         const changedArray = pokemon.map((item) => item.pokemon);
-        // setPaginatedPokemons((prevState) => [...prevState, ...changedArray]);
-        setPokemons(changedArray);
-        // setPaginatedPokemons(changedArray);
+        if (filteredPage === 1) {
+          setPaginatedPokemons(changedArray.slice(0, pageSize));
+        } else {
+          setPaginatedPokemons((prevState) => [
+            ...prevState,
+            ...changedArray.slice(
+              (filteredPage - 1) * pageSize,
+              pageSize * filteredPage
+            ),
+          ]);
+        }
         setLoading(false);
       } else {
         const { results } = await getPokemons({ offset });
@@ -35,19 +38,13 @@ function Page2() {
       }
     };
     getAllPokemons();
-  }, [offset, name]);
-
-  useEffect(() => {
-    const getPagination = pokemons.slice(
-      (filteredPage - 1) * pageSize,
-      pageSize * filteredPage
-    );
-    setPaginatedPokemons((prevState) => [...prevState, ...getPagination]);
-  }, [pageSize, pokemons, filteredPage]);
+  }, [offset, name, pageSize, filteredPage]);
 
   const filterByType = (value) => {
     setName(value);
     setFilteredPage(1);
+    setPaginatedPokemons([]);
+    setPokemons([]);
   };
 
   const handleScroll = () => {

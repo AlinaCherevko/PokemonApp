@@ -17,9 +17,7 @@ function HomePage() {
   const [offset, setOffset] = useState(0);
   const [count, setCount] = useState(0);
   const [filteredPage, setFilteredPage] = useState(1);
-
-  const [pageSize] = useState(20);
-  console.log(pokemons);
+  const pageSize = 20;
 
   const setPages = (value) => {
     setOffset(value);
