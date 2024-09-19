@@ -22,7 +22,7 @@ function Page2() {
     const getAllPokemons = async () => {
       if (name) {
         const { pokemon } = await getArrayPokemonByType(name);
-
+        setPokemons([]);
         const changedArray = pokemon.map((item) => item.pokemon);
         // setPaginatedPokemons((prevState) => [...prevState, ...changedArray]);
         setPokemons(changedArray);
