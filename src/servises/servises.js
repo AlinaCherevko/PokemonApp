@@ -28,12 +28,12 @@ export const getArrayPokemonByColor = async (name) => {
   return data;
 };
 
-export const getPokemonByForm = async (name) => {
-  const { data } = await instance.get(`/pokemon-form/${name}`);
+export const getPokemonsByType = async () => {
+  const { data } = await instance.get("/type");
   return data;
 };
 
-export const getPokemonByHabitats = async () => {
-  const { data } = await instance.get("/ability");
+export const getArrayPokemonByType = async (name) => {
+  const { data } = await instance.get(`/type/${name}`);
   return data;
 };
