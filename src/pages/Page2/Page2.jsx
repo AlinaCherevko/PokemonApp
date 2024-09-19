@@ -7,24 +7,45 @@ import { getPokemons } from "../../servises/servises";
 function Page2() {
   const [pokemons, setPokemons] = useState([]);
   const [offset, setOffset] = useState(0);
-
-  console.log(pokemons);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getAllPokemons = async () => {
-      const { count, results } = await getPokemons({ offset });
-
-      setPokemons(results);
+      const { results } = await getPokemons({ offset });
+      setPokemons((prevState) => [...prevState, ...results]);
     };
-
     getAllPokemons();
   }, [offset]);
+
+  const handleScroll = () => {
+    if (
+      document.body.scrollHeight - 300 <
+      window.scrollY + window.innerHeight
+    ) {
+      setLoading(true);
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  useEffect(() => {
+    if (loading == true) {
+      setOffset((prevState) => prevState + 20);
+    }
+  }, [loading]);
 
   return (
     <section>
       <div className="container">
         <Selector />
-        <PokemonList pokemons={pokemons} />
+        {pokemons.length > 0 ? (
+          <>
+            <PokemonList pokemons={pokemons} />
+          </>
+        ) : (
+          <p>Sorry, no find any pokemons</p>
+        )}
+        {loading && <p>Loading content...</p>}
       </div>
     </section>
   );

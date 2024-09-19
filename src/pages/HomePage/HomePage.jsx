@@ -19,6 +19,7 @@ function HomePage() {
   const [filteredPage, setFilteredPage] = useState(1);
 
   const [pageSize] = useState(20);
+  console.log(pokemons);
 
   const setPages = (value) => {
     setOffset(value);
@@ -35,12 +36,6 @@ function HomePage() {
         const { pokemon_species } = await getArrayPokemonByColor(name);
         setPokemons(pokemon_species);
         setCount(pokemon_species.length);
-        const getPagination = pokemons.slice(
-          (filteredPage - 1) * pageSize,
-          pageSize * filteredPage
-        );
-
-        setPaginatedPokemons(getPagination);
       } else {
         const { count, results } = await getPokemons({ offset });
         setPokemons(results);
@@ -48,7 +43,15 @@ function HomePage() {
       }
     };
     getPokemonsData();
-  }, [offset, name, filteredPage, pageSize, pokemons]);
+  }, [offset, name]);
+
+  useEffect(() => {
+    const getPagination = pokemons.slice(
+      (filteredPage - 1) * pageSize,
+      pageSize * filteredPage
+    );
+    setPaginatedPokemons(getPagination);
+  }, [filteredPage, pageSize, pokemons]);
 
   const pokemonsToShow = name ? paginatedPokemons : pokemons;
 
@@ -68,7 +71,7 @@ function HomePage() {
             />
           </>
         ) : (
-          <p>Sorry, no find any pokemons with these search parameter</p>
+          <p>Sorry, no find any pokemons</p>
         )}
       </div>
     </section>
