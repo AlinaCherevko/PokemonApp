@@ -9,6 +9,11 @@ function Page2() {
   const [pokemons, setPokemons] = useState([]);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [filteredPage, setFilteredPage] = useState(1);
+  const [paginatedPokemons, setPaginatedPokemons] = useState([]);
+
+  const [pageSize] = useState(20);
+
   console.log(pokemons);
   //console.log(loading);
   //console.log(offset);
@@ -19,8 +24,9 @@ function Page2() {
         const { pokemon } = await getArrayPokemonByType(name);
 
         const changedArray = pokemon.map((item) => item.pokemon);
-        setPokemons(changedArray);
-        //setPokemons((prevState) => [...prevState, ...pokemon]);
+        //setPaginatedPokemons((prevState) => [...prevState, ...changedArray]);
+        // setPokemons(changedArray);
+        setPaginatedPokemons(changedArray);
         setLoading(false);
       } else {
         const { results } = await getPokemons({ offset });
@@ -31,8 +37,17 @@ function Page2() {
     getAllPokemons();
   }, [offset, name]);
 
+  useEffect(() => {
+    const getPagination = pokemons.slice(
+      (filteredPage - 1) * pageSize,
+      pageSize * filteredPage
+    );
+    setPaginatedPokemons(getPagination);
+  }, [filteredPage, pageSize, pokemons]);
+
   const filterByType = (value) => {
     setName(value);
+    setFilteredPage(1);
   };
 
   const handleScroll = () => {
@@ -46,9 +61,13 @@ function Page2() {
 
   useEffect(() => {
     if (loading == true) {
-      setOffset((prevState) => prevState + 20);
+      if (name) {
+        setFilteredPage((prevState) => prevState + 1);
+      } else {
+        setOffset((prevState) => prevState + 20);
+      }
     }
-  }, [loading]);
+  }, [loading, name]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -57,13 +76,15 @@ function Page2() {
     };
   }, []);
 
+  const pokemonsToShow = name ? paginatedPokemons : pokemons;
+
   return (
     <section>
       <div className="container">
         <TypeSelector filterByType={filterByType} />
-        {pokemons.length > 0 ? (
+        {pokemonsToShow.length > 0 ? (
           <>
-            <PokemonList pokemons={pokemons} />
+            <PokemonList pokemons={pokemonsToShow} />
           </>
         ) : (
           <p>Sorry, no find any pokemons</p>
