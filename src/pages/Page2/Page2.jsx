@@ -13,6 +13,8 @@ function Page2() {
   const [paginatedPokemons, setPaginatedPokemons] = useState([]);
   const pageSize = 20;
 
+  console.log(loading);
+
   useEffect(() => {
     const getAllPokemons = async () => {
       if (name) {
@@ -86,7 +88,6 @@ function Page2() {
         ) : (
           <p>Sorry, no find any pokemons</p>
         )}
-        {loading && <p>Loading content...</p>}
       </div>
     </section>
   );
