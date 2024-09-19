@@ -9,10 +9,14 @@ function Page2() {
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  console.log(loading);
+  console.log(offset);
+
   useEffect(() => {
     const getAllPokemons = async () => {
       const { results } = await getPokemons({ offset });
       setPokemons((prevState) => [...prevState, ...results]);
+      setLoading(false);
     };
     getAllPokemons();
   }, [offset]);
@@ -26,13 +30,18 @@ function Page2() {
     }
   };
 
-  window.addEventListener("scroll", handleScroll);
-
   useEffect(() => {
     if (loading == true) {
       setOffset((prevState) => prevState + 20);
     }
   }, [loading]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <section>
