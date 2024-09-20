@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import style from "./Pagination.module.css";
 import classNames from "classnames";
 import Icon from "../Icon/Icon";
+import { memo } from "react";
 
 function Pagination({ count, setPages, offset, setFilteredPage, pokemons }) {
   const postPerPage = 20;
@@ -87,4 +88,4 @@ Pagination.propTypes = {
   pokemons: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default Pagination;
+export default memo(Pagination);

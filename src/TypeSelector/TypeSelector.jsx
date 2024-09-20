@@ -17,7 +17,6 @@ function TypeSelector({ filterByType }) {
   }, []);
 
   const onSelectChange = (e) => {
-    console.log(e.target.value);
     filterByType(e.target.value);
   };
 

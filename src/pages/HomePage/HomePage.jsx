@@ -10,8 +10,8 @@ import style from "./HomePage.module.css";
 import Selector from "../../Selector/Selector.jsx";
 
 function HomePage() {
-  const [name, setName] = useState("");
-
+  // const [name, setName] = useState("");
+  const [name, setName] = useState(localStorage.getItem("color"));
   const [pokemons, setPokemons] = useState([]);
   const [paginatedPokemons, setPaginatedPokemons] = useState([]);
   const [offset, setOffset] = useState(0);
@@ -24,6 +24,8 @@ function HomePage() {
   };
 
   const filterByColor = (value) => {
+    localStorage.removeItem("color");
+    localStorage.setItem("color", value);
     setName(value);
     setFilteredPage(1);
   };

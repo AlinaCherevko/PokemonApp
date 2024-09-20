@@ -1,6 +1,7 @@
 import Pokemon from "../Pokemon/Pokemon";
 import PropTypes from "prop-types";
 import style from "./PokemonList.module.css";
+import { memo } from "react";
 
 function PokemonList({ pokemons }) {
   return (
@@ -17,4 +18,4 @@ PokemonList.propTypes = {
   pokemons: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default PokemonList;
+export default memo(PokemonList);

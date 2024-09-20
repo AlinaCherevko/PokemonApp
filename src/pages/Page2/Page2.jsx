@@ -4,16 +4,13 @@ import { getArrayPokemonByType, getPokemons } from "../../servises/servises";
 import TypeSelector from "../../TypeSelector/TypeSelector";
 
 function Page2() {
-  const [name, setName] = useState("");
-
+  const [name, setName] = useState(localStorage.getItem("type"));
   const [pokemons, setPokemons] = useState([]);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
   const [filteredPage, setFilteredPage] = useState(1);
   const [paginatedPokemons, setPaginatedPokemons] = useState([]);
   const pageSize = 20;
-
-  console.log(loading);
 
   useEffect(() => {
     const getAllPokemons = async () => {
@@ -43,6 +40,8 @@ function Page2() {
   }, [offset, name, pageSize, filteredPage]);
 
   const filterByType = (value) => {
+    localStorage.removeItem("type");
+    localStorage.setItem("type", value);
     setName(value);
     setFilteredPage(1);
     setPaginatedPokemons([]);

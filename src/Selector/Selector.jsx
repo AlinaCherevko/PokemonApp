@@ -16,7 +16,6 @@ function Selector({ filterByColor }) {
   }, []);
 
   const onSelectChange = (e) => {
-    console.log(e.target.value);
     filterByColor(e.target.value);
   };
 
