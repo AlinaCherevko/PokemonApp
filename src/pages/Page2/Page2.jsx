@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import PokemonList from "../../PokemonList/PokemonList";
+// import PokemonList from "../../PokemonList/PokemonList";
 import { getArrayPokemonByType, getPokemons } from "../../servises/servises";
 import Selector from "../../Selector/Selector";
+import PokemonListScroll from "../../PokemonListScroll/PokemonListScroll";
 
 function Page2() {
   const [name, setName] = useState(localStorage.getItem("type"));
@@ -82,7 +83,7 @@ function Page2() {
         <Selector filterByOption={filterByType} placeholder="By Type" />
         {pokemonsToShow.length > 0 ? (
           <>
-            <PokemonList pokemons={pokemonsToShow} />
+            <PokemonListScroll pokemons={pokemonsToShow} />
           </>
         ) : (
           <p>Sorry, no find any pokemons</p>
