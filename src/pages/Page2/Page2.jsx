@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PokemonList from "../../PokemonList/PokemonList";
 import { getArrayPokemonByType, getPokemons } from "../../servises/servises";
-import TypeSelector from "../../TypeSelector/TypeSelector";
+import Selector from "../../Selector/Selector";
 
 function Page2() {
   const [name, setName] = useState(localStorage.getItem("type"));
@@ -79,7 +79,7 @@ function Page2() {
   return (
     <section>
       <div className="container">
-        <TypeSelector filterByType={filterByType} />
+        <Selector filterByOption={filterByType} placeholder="By Type" />
         {pokemonsToShow.length > 0 ? (
           <>
             <PokemonList pokemons={pokemonsToShow} />

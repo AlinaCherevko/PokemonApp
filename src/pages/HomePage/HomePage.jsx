@@ -58,7 +58,7 @@ function HomePage() {
   return (
     <section className={style.pageWrapper}>
       <div className="container">
-        <Selector filterByColor={filterByColor} />
+        <Selector filterByOption={filterByColor} placeholder="By color" />
         {pokemonsToShow.length > 0 ? (
           <>
             <PokemonList pokemons={pokemonsToShow} />

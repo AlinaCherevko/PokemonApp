@@ -1,22 +1,27 @@
 import { Select } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { getPokemonsByColor } from "../servises/servises";
+import { getPokemonsByColor, getPokemonsByType } from "../servises/servises";
 import PropTypes from "prop-types";
 import style from "./Selector.module.css";
 
-function Selector({ filterByColor }) {
-  const [colors, setColors] = useState([]);
+function Selector({ filterByOption, placeholder }) {
+  const [options, setOptions] = useState([]);
 
   useEffect(() => {
     const getPokemonsColor = async () => {
-      const { results } = await getPokemonsByColor();
-      setColors(results);
+      if (placeholder === "By color") {
+        const { results } = await getPokemonsByColor();
+        setOptions(results);
+      } else {
+        const { results } = await getPokemonsByType();
+        setOptions(results);
+      }
     };
     getPokemonsColor();
-  }, []);
+  }, [placeholder]);
 
   const onSelectChange = (e) => {
-    filterByColor(e.target.value);
+    filterByOption(e.target.value);
   };
 
   return (
@@ -25,11 +30,11 @@ function Selector({ filterByColor }) {
         className={style.selector}
         size="md"
         variant="flushed"
-        placeholder="By color"
+        placeholder={placeholder}
         onChange={onSelectChange}
       >
-        {colors.length > 0 &&
-          colors.map((item) => (
+        {options.length > 0 &&
+          options.map((item) => (
             <option key={item.name} value={item.name}>
               {item.name}
             </option>
@@ -40,7 +45,8 @@ function Selector({ filterByColor }) {
 }
 
 Selector.propTypes = {
-  filterByColor: PropTypes.func,
+  filterByOption: PropTypes.func,
+  placeholder: PropTypes.string,
 };
 
 export default Selector;
