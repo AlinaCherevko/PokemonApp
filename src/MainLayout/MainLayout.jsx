@@ -7,6 +7,7 @@ function MainLayout() {
       <nav className={style.nav}>
         <NavLink to="/">Pagination By Pages</NavLink>
         <NavLink to="/scroll">Infinity scroll</NavLink>
+        <NavLink to="/virtualized-list">Virtualized list</NavLink>
       </nav>
       <main>
         <Outlet />

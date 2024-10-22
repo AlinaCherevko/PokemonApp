@@ -25,8 +25,9 @@ function PokemonListScroll({ pokemons }) {
   return (
     <Grid
       className="Grid"
-      height={(rowHeight * pokemons.length) / 4}
-      width={1000}
+      height={window.innerHeight - 200}
+      // height={(rowHeight * pokemons.length) / 4}
+      width={window.innerWidth}
       rowCount={Math.ceil(pokemons.length / 4)}
       columnCount={4}
       columnWidth={240}
